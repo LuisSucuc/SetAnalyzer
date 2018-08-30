@@ -3,7 +3,6 @@
 package setanalyzer;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -159,6 +158,8 @@ public class Interface extends javax.swing.JFrame {
             
             
             Token token =lexer.yylex();
+            //System.out.println("TEXTO A ANALIZAR: " + lexer.yytext());
+            //System.out.println("TOKEN RECIBIDO: " + token);
 
             //Si se encontró el final del archivo
             if (token == null){
@@ -173,7 +174,7 @@ public class Interface extends javax.swing.JFrame {
             switch (token){
 
                 case SPACES:
-                    if (original_text != "" && tokens_text !="") {
+                    if (!"".equals(original_text) && !"".equals(tokens_text)) {
                         final_text = final_text + original_text + " ---> " + tokens_text + "\n";
                         tokens_text = original_text = "";
                     }
@@ -181,8 +182,10 @@ public class Interface extends javax.swing.JFrame {
                     break;
 
                 case ERROR:
-                    original_text=original_text + "Error, simbolo no reconocido " + "\n";
-                    break;
+                    String error = "El siguiente texto no fue reconocido " + lexer.yytext();
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    txtResultado.setText(final_text);
+                    return;
 
                 default:
                     original_text = original_text + " "+ lexer.yytext();

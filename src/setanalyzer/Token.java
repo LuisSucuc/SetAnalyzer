@@ -10,5 +10,5 @@ package setanalyzer;
  * @author luis
  */
 public enum Token {
-    PALABRA, INT, ERROR, SPACES
+     ERROR, DEFINICION, CONJUNTO_UNIVERSO, LLAVE_ABIERTA, LLAVE_CERRADA, COMA, IGUAL, ELEMENTO, SPACES,CONJUNTO
 }

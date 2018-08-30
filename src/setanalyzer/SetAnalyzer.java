@@ -1,5 +1,3 @@
-
-
 package setanalyzer;
 
 import java.io.File;
