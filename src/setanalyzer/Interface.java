@@ -158,6 +158,7 @@ public class Interface extends javax.swing.JFrame {
             
             
             Token token =lexer.yylex();
+            
             //System.out.println("TEXTO A ANALIZAR: " + lexer.yytext());
             //System.out.println("TOKEN RECIBIDO: " + token);
 

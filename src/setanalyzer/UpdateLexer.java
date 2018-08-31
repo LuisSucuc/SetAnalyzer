@@ -3,7 +3,7 @@ package setanalyzer;
 import java.io.File;
 
 
-public class SetAnalyzer {
+public class UpdateLexer {
 
   
     public static void main(String[] args) {
