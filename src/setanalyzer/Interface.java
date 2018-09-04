@@ -8,20 +8,23 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 
 
 public class Interface extends javax.swing.JFrame {
-    
-    String path;
+    //String que guarda la ubicación del archivo
+    String ubicacionArchivo;
+    //Lista que guarda todos los errores en el archivo
+    List<String> lista_errores = new ArrayList<String>();
     
     public Interface() {
         initComponents();
-        //btnValidar.setEnabled(false);
+        //Boton para validar inicialmente desactivado
+        btnAnalizarArchivo.setEnabled(false);
     }
 
 
@@ -33,14 +36,14 @@ public class Interface extends javax.swing.JFrame {
         btnGetArchivo = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         lblPath = new javax.swing.JLabel();
-        btnValidar = new javax.swing.JButton();
+        btnAnalizarArchivo = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtResultado = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnGetArchivo.setText("Seleccionar Archivo");
+        btnGetArchivo.setText("Seleccionar archivo");
         btnGetArchivo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnGetArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,10 +62,10 @@ public class Interface extends javax.swing.JFrame {
         lblPath.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPath.setText("No seleccionado");
 
-        btnValidar.setText("Validar");
-        btnValidar.addActionListener(new java.awt.event.ActionListener() {
+        btnAnalizarArchivo.setText("Analizar archivo");
+        btnAnalizarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnValidarActionPerformed(evt);
+                btnAnalizarArchivoActionPerformed(evt);
             }
         });
 
@@ -82,135 +85,207 @@ public class Interface extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(215, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(180, 180, 180)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnGetArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(128, 128, 128)
-                                .addComponent(lblPath, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 123, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGetArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAnalizarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblPath, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(209, 209, 209))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(lblPath)
                 .addGap(18, 18, 18)
                 .addComponent(btnGetArchivo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLimpiar)
                 .addGap(12, 12, 12)
-                .addComponent(btnValidar)
+                .addComponent(btnAnalizarArchivo)
                 .addGap(18, 18, 18)
                 .addComponent(btnSalir)
-                .addGap(33, 33, 33))
+                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void getPath() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setDialogTitle("Selecciona un archivo");
-        chooser.setAcceptAllFileFilterUsed(false);
-
-        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            path = chooser.getSelectedFile().toString();
-            lblPath.setText(path);
-            btnValidar.setEnabled(true);
-        } else {
+    /**
+     * Procedimiento que abre una ventana para seleccionar la ubicación del archivo
+     * 
+     */
+    public void getUbicacion() {
+        //Ventana para ubicación del archivo
+        JFileChooser seleccionar_archivo = new JFileChooser();
+        //Abre la ventana en al ubicación actual
+        seleccionar_archivo.setCurrentDirectory(new java.io.File("."));
+        //Se define el título de la ventana
+        seleccionar_archivo.setDialogTitle("Buscar archivo");//seleccionar_archivo.setAcceptAllFileFilterUsed(true);
+        
+        //Si se seleccionó un archivo
+        if (seleccionar_archivo.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            //Se obtiene la ubicación del archivo y se almacena en la variable correspondiente
+            ubicacionArchivo = seleccionar_archivo.getSelectedFile().toString();
+            //Se muestra al usuario en el label la ubicación y archivo seleccionado
+            lblPath.setText(ubicacionArchivo);
+            //Se activa el botón para Analizar
+            btnAnalizarArchivo.setEnabled(true);
+        } else { //Si no se selecciona el archivo
+            //Se limpia el label
             limpiar();
         }
     }
-    
-     
       
+    /**
+     * Limpia el label que muestra la úbicación del archivo
+     */
     public void limpiar(){
+        //Cambia el texto en label de ubicacion archivo
         lblPath.setText("Archivo no seleccionado...");
-        btnValidar.setEnabled(false);
-        path = "";
+        //Desactiva el botón analizar archivo
+        btnAnalizarArchivo.setEnabled(false);
+        //Se limpia la variable
+        ubicacionArchivo = "";
     }
     
+    /**
+     * Comprueba si el error ya existe en la lista
+     * @param stringError String que contiene el error a evaluar
+     * @return Retorna un booleano que indica si existe o no el error en la lista
+     */
+    public boolean existeError(String stringError){
+        //Se recorren todos los elementos en la lista
+        for(String error: lista_errores) {
+            //Se comprueba si conicide con el error enviado
+            if(error.trim().contains(stringError))
+               return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Realiza el análisis léxico del archivo
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void Analizar() throws FileNotFoundException, IOException{
         
-        PrintWriter file_writer = new PrintWriter("the-file-name.txt", "UTF-8");
-       
-        Reader reader = new BufferedReader(new FileReader("Entrada.txt"));
-        Lexer lexer = new Lexer(reader);
+        // Se crea el objeto que generará el reporte
+        PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8");
         
+        //Se crea el objeto que manipulará el archivo selecionado
+        Reader leerArchivo = new BufferedReader(new FileReader(ubicacionArchivo));
+        //Se crea la instancia del analizador léxico (JFlex) y se le envía el archivo a analizar
+        Lexer lexer        = new Lexer(leerArchivo);
         
-        String original_text = "";
-        String tokens_text = "";
-        String final_text = "";
+        //String que guardará el texto original
+        String cadenaOriginal = "";
+        //String que guardará los tokens reconocidos
+        String cadenaTokens   = "";
+        //String que concatenará el texto original y los tokens para guardarlo en el reporte y mostrarlo en el textarea
+        String cadenaReporte  = "";
+        //Variable que definirá si se encontraron errores
+        Boolean errors = false;
+        
+        //Se crea un ciclo "infinito"
         while (true){
             
-            
-            Token token =lexer.yylex();
+            //Objeteo de la clase token, que retornará el token que encontró para su posterior evaluación
+            Token token = lexer.yylex();
             
             //System.out.println("TEXTO A ANALIZAR: " + lexer.yytext());
             //System.out.println("TOKEN RECIBIDO: " + token);
 
-            //Si se encontró el final del archivo
+            //Si se leggó el final del archivo, ningún token coincidira
             if (token == null){
                 //Se muestra el resultado en el label
-                txtResultado.setText(final_text);
+                txtResultado.setText(cadenaReporte);
                 //Se guarda en el archivo
-                file_writer.println(final_text);
-                file_writer.close();
+                archivoReporte.println(cadenaReporte);
+                //Se cierra el archivo
+                archivoReporte.close();
+                //Si exiten errores se muestra la lista de errores
+                if (errors) {
+                    JOptionPane.showMessageDialog(null, "Los siguientes elementos no se reconocieron" + lista_errores, 
+                                                    "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+                //Se finaliza el procedimiento de análisis
                 return;
             }
 
+            //Se evalúa el token encontrado
             switch (token){
-
-                case SPACES:
-                    if (!"".equals(original_text) && !"".equals(tokens_text)) {
-                        final_text = final_text + original_text + " ---> " + tokens_text + "\n";
-                        tokens_text = original_text = "";
+                
+                //Si se encuentra una nueva línea
+                case NUEVA_LINEA:
+                    //Si las cadenas no están vacías (Esto se da cuando solo se encuentran errores)
+                    if (!"".equals(cadenaOriginal) && !"".equals(cadenaTokens)) {
+                        //Se guarda la cadenaOriginal leida y la cadena de tokens separada por una flecha
+                        cadenaReporte = cadenaReporte + cadenaOriginal + " ---> " + cadenaTokens + "\n";
+                        //Se limpia la cadenaOriginal y cadenaTokens
+                        cadenaTokens = cadenaOriginal = "";
                     }
-                    
                     break;
 
                 case ERROR:
-                    String error = "El siguiente texto no fue reconocido " + lexer.yytext();
-                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
-                    txtResultado.setText(final_text);
-                    return;
+                    //Si aún no existe el error 
+                    if (!existeError(lexer.yytext())) {
+                        //Se inserta en la lista el nuevo elemento
+                        lista_errores.add(lexer.yytext());
+                    }
+                    //Se suma a la cadena original el texto-palabra que se está evaluando
+                    cadenaOriginal = cadenaOriginal + " "+ lexer.yytext();
+                    //Se suma a la cadena de tokens el token obtenido (ERROR)
+                    cadenaTokens = cadenaTokens + " ******* "+ token + " ******* ";
+                    //Indica que existen errores para posteriormente mostrar al ventana
+                    errors = true;
+                    break;
 
+                case SPACES:
+                    //Si exiten espacios se añade al texto original
+                    cadenaOriginal = cadenaOriginal + " ";
+                    break;
+                
+                    
+                //Para todos los lexemas reconocidos
                 default:
-                    original_text = original_text + " "+ lexer.yytext();
-                    tokens_text = tokens_text + " "+ token;
+                    //Se suma a la cadena original el texto-palabra que se está evaluando
+                    cadenaOriginal = cadenaOriginal + lexer.yytext();
+                    //Se suma a la cadena de tokens el token obtenido
+                    cadenaTokens = cadenaTokens + " "+ token;
             }
         }
     }
     
     private void btnGetArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetArchivoActionPerformed
-        getPath();
+        getUbicacion();
     }//GEN-LAST:event_btnGetArchivoActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        //Cierra completamente el programa
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
+    private void btnAnalizarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarArchivoActionPerformed
         try {
             Analizar();
         } catch (IOException ex) {
-            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
       
-    }//GEN-LAST:event_btnValidarActionPerformed
+    }//GEN-LAST:event_btnAnalizarArchivoActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiar();
@@ -252,10 +327,10 @@ public class Interface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnalizarArchivo;
     private javax.swing.JButton btnGetArchivo;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnValidar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblPath;
     private javax.swing.JTextArea txtResultado;
