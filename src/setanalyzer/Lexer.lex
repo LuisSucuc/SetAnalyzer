@@ -33,9 +33,9 @@ COMPLEMENTO = "^c"
 
 
 
-WHITE =[\t]
+WHITE  =[\t]
 SPACES = " "
-NUEVA_LINEA = [\n]
+NUEVA_LINEA = [\n\r]
 
 %{
 public String lexeme;

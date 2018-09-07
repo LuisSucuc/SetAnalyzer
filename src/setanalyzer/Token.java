@@ -1,5 +1,8 @@
 package setanalyzer;
 
+/**
+ * clase que contiene todos los tokens definidos y utilizados
+ */
 public enum Token {
      ERROR, DEFINICION, CONJUNTO_UNIVERSO, LLAVE_ABIERTA, LLAVE_CERRADA,  
      COMA, IGUAL, ELEMENTO, SPACES, NUEVA_LINEA, CONJUNTO, OPERACION, PARENTESIS_ABIERTO,

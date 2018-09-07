@@ -1,5 +1,4 @@
 
-
 package setanalyzer;
 
 import java.io.BufferedReader;
@@ -158,6 +157,7 @@ public class Interface extends javax.swing.JFrame {
         btnAnalizarArchivo.setEnabled(false);
         //Se limpia la variable
         ubicacionArchivo = "";
+        txtResultado.setText("");
     }
     
     /**
@@ -254,7 +254,7 @@ public class Interface extends javax.swing.JFrame {
                     break;
 
                 case SPACES:
-                    //Si exiten espacios se añade al texto original
+                    //Si exiten espacios se añade al texto original 
                     cadenaOriginal = cadenaOriginal + " ";
                     break;
                 
