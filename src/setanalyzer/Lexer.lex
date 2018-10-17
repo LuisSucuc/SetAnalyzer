@@ -9,35 +9,38 @@ DEFINICION = "DEFINICION"
 
 
 CONJUNTO_UNIVERSO = "U"
-LLAVE_ABIERTA = "{"
-LLAVE_CERRADA = "}"
-COMA = ","
-IGUAL = "="
+LLAVE_ABIERTA     = "{"
+LLAVE_CERRADA     = "}"
+COMA              = ","
+IGUAL             = "="
 
-LETRA_MINUSCULA = [a-z]
-CONJUNTO = [A-Z]
-NUMERO = [0-9]
+LETRA_MINUSCULA = [a-z] | "ñ"
+LETRA_MAYUSCULA = [A-Z] | "Ñ"
+NUMERO          = [0-9]
 
 
-OPERACION = "OPERACION"
+OPERACION          = "OPERACION"
 PARENTESIS_ABIERTO = "("
 PARENTESIS_CERRADO = ")"
 
 
-UNION = "&"
-INTERSECCION = "$"
-DIFERENCIA = "/"
+UNION         = "&"
+INTERSECCION  = "$"
+DIFERENCIA    = "/"
 PRODUCTO_CRUZ = "*"
-COMPLEMENTO = "^c"
+COMPLEMENTO   = "^c"
 
 
 
 
-WHITE  =[\t]
-SPACES = " "
+WHITE       = [\t]
+SPACE      = " "
 NUEVA_LINEA = [\n\r]
-ENE = "ñ"
-ENE_MAY = "Ñ"
+
+ELEMENTO = {SPACE}* {NUMERO}+ | {LETRA_MINUSCULA}+  {SPACE}*
+
+CONJUNTO = {LETRA_MAYUSCULA} {SPACE}* {IGUAL} {SPACE}* {LLAVE_ABIERTA}   {ELEMENTO}  {LLAVE_CERRADA} {SPACE}*
+
 
 %{
 public String lexeme;
@@ -53,8 +56,8 @@ public String lexeme;
 {LLAVE_CERRADA}             {return LLAVE_CERRADA;}
 {COMA}                      {return COMA;}
 {IGUAL}                     {return IGUAL;}
-{ENE_MAY}|{CONJUNTO}                  {return CONJUNTO;}
-{ENE}|{LETRA_MINUSCULA}|{NUMERO}+ {return ELEMENTO;}
+{CONJUNTO}                  {return CONJUNTO;}
+{LETRA_MINUSCULA}|{NUMERO}+ {return ELEMENTO;}
 
 {OPERACION}                 {return OPERACION;}
 {PARENTESIS_ABIERTO}        {return PARENTESIS_ABIERTO;}
@@ -67,7 +70,7 @@ public String lexeme;
 
 
 {WHITE}                     {/*Ignore*/}
-{SPACES}                    {return SPACES;}
+{SPACE}                    {return SPACES;}
 {NUEVA_LINEA}               {return NUEVA_LINEA;}
 
 

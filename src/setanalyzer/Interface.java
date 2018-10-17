@@ -23,8 +23,11 @@ public class Interface extends javax.swing.JFrame {
     public Interface() {
         initComponents();
         //Boton para validar inicialmente desactivado
-        btnAnalizarArchivo.setEnabled(false);
+        btnAnalizarArchivo.setEnabled(true);
         this.setLocationRelativeTo(null);
+        //Actualizar lexer
+        UpdateLexer generarLexer = new UpdateLexer();
+        generarLexer.generarLexer("/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/src/setanalyzer/Lexer.lex");
     }
 
 
@@ -187,6 +190,7 @@ public class Interface extends javax.swing.JFrame {
         PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8");
         
         //Se crea el objeto que manipulará el archivo selecionado
+        ubicacionArchivo = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/e1.txt";
         Reader leerArchivo = new BufferedReader(new FileReader(ubicacionArchivo));
         //Se crea la instancia del analizador léxico (JFlex) y se le envía el archivo a analizar
         Lexer lexer        = new Lexer(leerArchivo);
@@ -257,7 +261,7 @@ public class Interface extends javax.swing.JFrame {
 
                 case SPACES:
                     //Si exiten espacios se añade al texto original 
-                    cadenaOriginal = cadenaOriginal + " ";
+                    cadenaOriginal = cadenaOriginal + "_";
                     break;
                 
                     
