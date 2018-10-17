@@ -36,6 +36,8 @@ COMPLEMENTO = "^c"
 WHITE  =[\t]
 SPACES = " "
 NUEVA_LINEA = [\n\r]
+ENE = "ñ"
+ENE_MAY = "Ñ"
 
 %{
 public String lexeme;
@@ -51,8 +53,8 @@ public String lexeme;
 {LLAVE_CERRADA}             {return LLAVE_CERRADA;}
 {COMA}                      {return COMA;}
 {IGUAL}                     {return IGUAL;}
-{CONJUNTO}                  {return CONJUNTO;}
-{LETRA_MINUSCULA}|{NUMERO}+ {return ELEMENTO;}
+{ENE_MAY}|{CONJUNTO}                  {return CONJUNTO;}
+{ENE}|{LETRA_MINUSCULA}|{NUMERO}+ {return ELEMENTO;}
 
 {OPERACION}                 {return OPERACION;}
 {PARENTESIS_ABIERTO}        {return PARENTESIS_ABIERTO;}

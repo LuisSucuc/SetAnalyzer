@@ -14,6 +14,10 @@ E = { a }
 F = { }
 
 ?????
+ñ
+á
+
+/n /a
 
 OPERACION
 A & B

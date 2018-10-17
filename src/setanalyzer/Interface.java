@@ -24,6 +24,7 @@ public class Interface extends javax.swing.JFrame {
         initComponents();
         //Boton para validar inicialmente desactivado
         btnAnalizarArchivo.setEnabled(false);
+        this.setLocationRelativeTo(null);
     }
 
 
@@ -234,6 +235,7 @@ public class Interface extends javax.swing.JFrame {
                     if (!"".equals(cadenaOriginal) && !"".equals(cadenaTokens)) {
                         //Se guarda la cadenaOriginal leida y la cadena de tokens separada por una flecha
                         cadenaReporte = cadenaReporte + cadenaOriginal + " ---> " + cadenaTokens + "\n";
+                        //cadenaReporte = cadenaReporte + cadenaOriginal + " ---> " + cadenaTokens + "_FIN_DE_LINEA_" +  "\n";
                         //Se limpia la cadenaOriginal y cadenaTokens
                         cadenaTokens = cadenaOriginal = "";
                     }
