@@ -21,13 +21,14 @@ public class Interface extends javax.swing.JFrame {
     List<String> lista_errores = new ArrayList<String>();
     
     public Interface() {
+        UpdateLexer generarLexer = new UpdateLexer();
+        generarLexer.generarLexer("/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/src/setanalyzer/Lexer.lex");
         initComponents();
         //Boton para validar inicialmente desactivado
         btnAnalizarArchivo.setEnabled(true);
         this.setLocationRelativeTo(null);
         //Actualizar lexer
-        UpdateLexer generarLexer = new UpdateLexer();
-        generarLexer.generarLexer("/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/src/setanalyzer/Lexer.lex");
+        
     }
 
 
