@@ -11,10 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import static setanalyzer.Token.*;
 
 
 
 public class Interface extends javax.swing.JFrame {
+    
     //String que guarda la ubicación del archivo
     String ubicacionArchivo;
     //Lista que guarda todos los errores en el archivo
@@ -22,7 +24,7 @@ public class Interface extends javax.swing.JFrame {
     
     public Interface() {
         UpdateLexer generarLexer = new UpdateLexer();
-        generarLexer.generarLexer("/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/src/setanalyzer/Lexer.lex");
+        generarLexer.generarLexer("/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/src/setanalyzer/LexGenerator.lexer");
         initComponents();
         //Boton para validar inicialmente desactivado
         btnAnalizarArchivo.setEnabled(true);
@@ -90,10 +92,10 @@ public class Interface extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1037, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(215, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(52, 52, 52)
@@ -103,14 +105,14 @@ public class Interface extends javax.swing.JFrame {
                             .addComponent(btnAnalizarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(lblPath, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(209, 209, 209))
+                .addGap(363, 363, 363))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(lblPath)
                 .addGap(18, 18, 18)
                 .addComponent(btnGetArchivo)
@@ -191,7 +193,7 @@ public class Interface extends javax.swing.JFrame {
         PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8");
         
         //Se crea el objeto que manipulará el archivo selecionado
-        ubicacionArchivo = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/e1.txt";
+        ubicacionArchivo = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/Entrada.txt";
         Reader leerArchivo = new BufferedReader(new FileReader(ubicacionArchivo));
         //Se crea la instancia del analizador léxico (JFlex) y se le envía el archivo a analizar
         Lexer lexer        = new Lexer(leerArchivo);
@@ -206,7 +208,9 @@ public class Interface extends javax.swing.JFrame {
         Boolean errors = false;
         
         //Se crea un ciclo "infinito"
+        boolean line_operation = false;
         while (true){
+            
             
             //Objeteo de la clase token, que retornará el token que encontró para su posterior evaluación
             Token token = lexer.yylex();
@@ -214,7 +218,7 @@ public class Interface extends javax.swing.JFrame {
             //System.out.println("TEXTO A ANALIZAR: " + lexer.yytext());
             //System.out.println("TOKEN RECIBIDO: " + token);
 
-            //Si se leggó el final del archivo, ningún token coincidira
+            //Si se legó el final del archivo
             if (token == null){
                 //Se muestra el resultado en el label
                 txtResultado.setText(cadenaReporte);
@@ -237,13 +241,20 @@ public class Interface extends javax.swing.JFrame {
                 //Si se encuentra una nueva línea
                 case NUEVA_LINEA:
                     //Si las cadenas no están vacías (Esto se da cuando solo se encuentran errores)
-                    if (!"".equals(cadenaOriginal) && !"".equals(cadenaTokens)) {
+                    
                         //Se guarda la cadenaOriginal leida y la cadena de tokens separada por una flecha
-                        cadenaReporte = cadenaReporte + cadenaOriginal + " ---> " + cadenaTokens + "\n";
-                        //cadenaReporte = cadenaReporte + cadenaOriginal + " ---> " + cadenaTokens + "_FIN_DE_LINEA_" +  "\n";
+                        String finLinea;
+                        if(!line_operation)
+                            finLinea = " SIN RECONOCIMIENTOS\n";
+                        
+                        else
+                            finLinea = "FIN. \n";
+                        
+                        line_operation = false;
+                        cadenaReporte = cadenaReporte + cadenaOriginal + " ---> " + cadenaTokens + finLinea;
                         //Se limpia la cadenaOriginal y cadenaTokens
                         cadenaTokens = cadenaOriginal = "";
-                    }
+                    
                     break;
 
                 case ERROR:
@@ -255,23 +266,26 @@ public class Interface extends javax.swing.JFrame {
                     //Se suma a la cadena original el texto-palabra que se está evaluando
                     cadenaOriginal = cadenaOriginal + " "+ lexer.yytext();
                     //Se suma a la cadena de tokens el token obtenido (ERROR)
-                    cadenaTokens = cadenaTokens + " ******* "+ token + " ******* ";
+                    cadenaTokens = cadenaTokens + "No reconocido '" + lexer.yytext() + "' en línea " + lexer.line_count + " columna " + lexer.column_count + ". ";
+                    
                     //Indica que existen errores para posteriormente mostrar al ventana
                     errors = true;
                     break;
 
                 case SPACES:
                     //Si exiten espacios se añade al texto original 
-                    cadenaOriginal = cadenaOriginal + "_";
+                    cadenaOriginal = cadenaOriginal + " ";
                     break;
-                
-                    
+
+                 
                 //Para todos los lexemas reconocidos
                 default:
                     //Se suma a la cadena original el texto-palabra que se está evaluando
                     cadenaOriginal = cadenaOriginal + lexer.yytext();
-                    //Se suma a la cadena de tokens el token obtenido
-                    cadenaTokens = cadenaTokens + " "+ token;
+                    if (token == CONJUNTO_UNIVERSO || token == DEFINICION || token == CONJUNTO || token == OPERACION_CONJUNTO || token == OPERACION) {
+                        cadenaTokens = cadenaTokens + " "+ token;
+                        line_operation = true;
+                    }                    
             }
         }
     }

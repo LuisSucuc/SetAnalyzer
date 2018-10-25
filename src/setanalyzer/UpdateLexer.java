@@ -7,7 +7,7 @@ public class UpdateLexer {
 
   
     public static void main(String[] args) {
-        String ubicacion = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/src/setanalyzer/Lexer.lex";
+        String ubicacion = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/src/setanalyzer/LexGenerator.lexer";
         generarLexer(ubicacion);
     }
     
