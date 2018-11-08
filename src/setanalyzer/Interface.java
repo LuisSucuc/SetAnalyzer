@@ -20,7 +20,9 @@ public class Interface extends javax.swing.JFrame {
     //String que guarda la ubicación del archivo
     String ubicacionArchivo;
     //Lista que guarda todos los errores en el archivo
-    List<String> lista_errores = new ArrayList<String>();
+    List<String> listaErrores = new ArrayList<String>();
+    //Listat que tiene todas las líneas leídas
+    List<Linea> listaLineas;
     
     public Interface() {
         UpdateLexer generarLexer = new UpdateLexer();
@@ -95,17 +97,17 @@ public class Interface extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1037, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(440, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGetArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAnalizarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lblPath, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(363, 363, 363))
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGetArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnalizarArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(429, 429, 429))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblPath, javax.swing.GroupLayout.PREFERRED_SIZE, 966, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +176,7 @@ public class Interface extends javax.swing.JFrame {
      */
     public boolean existeError(String stringError){
         //Se recorren todos los elementos en la lista
-        for(String error: lista_errores) {
+        for(String error: listaErrores) {
             //Se comprueba si conicide con el error enviado
             if(error.trim().contains(stringError))
                return true;
@@ -188,102 +190,68 @@ public class Interface extends javax.swing.JFrame {
      * @throws IOException
      */
     public void Analizar() throws FileNotFoundException, IOException{
-        
+        listaLineas = new ArrayList<Linea>();
         // Se crea el objeto que generará el reporte
         PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8");
         
         //Se crea el objeto que manipulará el archivo selecionado
-        ubicacionArchivo = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/Entrada.txt";
+        //ubicacionArchivo = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/Entrada.txt";
         Reader leerArchivo = new BufferedReader(new FileReader(ubicacionArchivo));
         //Se crea la instancia del analizador léxico (JFlex) y se le envía el archivo a analizar
         Lexer lexer        = new Lexer(leerArchivo);
         
-        //String que guardará el texto original
-        String cadenaOriginal = "";
-        //String que guardará los tokens reconocidos
-        String cadenaTokens   = "";
-        //String que concatenará el texto original y los tokens para guardarlo en el reporte y mostrarlo en el textarea
-        String cadenaReporte  = "";
-        //Variable que definirá si se encontraron errores
-        Boolean errors = false;
-        
-        boolean line_operation = false;
+        //Objeto que contendrá la información 
+        Linea lineaActual = new Linea();
         while (true){
             
             
-            //Objeteo de la clase token, que retornará el token que encontró para su posterior evaluación
+            //Objeto de la clase token, que retornará el token que encontró para su posterior evaluación
             Token token = lexer.yylex();
 
             //Si se legó el final del archivo
             if (token == null){
+                String documentoFinal = utilidades.utils.finalText(listaLineas);
                 //Se muestra el resultado en el label
-                txtResultado.setText(cadenaReporte);
+                txtResultado.setText(documentoFinal);
                 //Se guarda en el archivo
-                archivoReporte.println(cadenaReporte);
+                archivoReporte.println(documentoFinal);
                 //Se cierra el archivo
                 archivoReporte.close();
-                //Si exiten errores se muestra la lista de errores
-                if (errors) {
-                    JOptionPane.showMessageDialog(null, "Los siguientes elementos no se reconocieron" + lista_errores, 
-                                                    "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-                //Se finaliza el procedimiento de análisis
                 return;
             }
-
+            
             //Se evalúa el token encontrado
             switch (token){
                 
                 //Si se encuentra una nueva línea
                 case NUEVA_LINEA:
-                    
-                        //Se guarda la cadenaOriginal leida y la cadena de tokens separada por una flecha
-                        String finLinea;
-                        if(!line_operation)
-                            finLinea = " SIN RECONOCIMIENTOS\n";
-                        
-                        else
-                            finLinea = "\n";
-                        
-                        line_operation = false;
-                        cadenaReporte = cadenaReporte + cadenaOriginal + " ---> " + cadenaTokens + finLinea;
-                        //Se limpia la cadenaOriginal y cadenaTokens
-                        cadenaTokens = cadenaOriginal = "";
+                        lineaActual.evaluarReconocimientos();
+                        listaLineas.add(lineaActual);
+                        lineaActual = new Linea();
                     
                     break;
 
                 case ERROR:
-                    //Si aún no existe el error 
-                    if (!existeError(lexer.yytext())) {
-                        //Se inserta en la lista el nuevo elemento
-                        lista_errores.add(lexer.yytext());
-                    }
-                    //Se suma a la cadena original el texto-palabra que se está evaluando
-                    cadenaOriginal = cadenaOriginal + " "+ lexer.yytext();
-                    //Se suma a la cadena de tokens el token obtenido (ERROR)
-                    cadenaTokens = cadenaTokens + "No reconocido '" + lexer.yytext() + "' en línea " + lexer.line_count + " columna " + lexer.column_count + ". ";
+                    lineaActual.sumarTextoOriginal(lexer.yytext());
+                    lineaActual.errorResultado(lexer.yytext(), lexer.line_count, lexer.column_count);
                     
-                    //Indica que existen errores para posteriormente mostrar al ventana
-                    errors = true;
+
                     break;
 
                 case SPACES:
-                    //Si exiten espacios se añade al texto original 
-                    cadenaOriginal = cadenaOriginal + " ";
+                    lineaActual.sumarEspacioTextoOriginal();
                     break;
 
                  
                 //Para todos los lexemas reconocidos
                 default:
-                    //Se suma a la cadena original el texto-palabra que se está evaluando
-                    cadenaOriginal = cadenaOriginal + lexer.yytext();
+                    lineaActual.sumarTextoOriginal(lexer.yytext());
                     if (token == CONJUNTO_UNIVERSO || token == DEFINICION || token == CONJUNTO || token == OPERACION_CONJUNTO || token == OPERACION) {
                         if (token == CONJUNTO_UNIVERSO) {
-                            System.out.println(lexer.yytext());
                             System.out.println(utilidades.utils.getElements(lexer.yytext()));
                         }
-                        cadenaTokens = cadenaTokens + " "+ token;
-                        line_operation = true;
+                        lineaActual.sumarResultado(token.name());
+                        lineaActual.setReconocimientos(true);
                     }                    
             }
         }

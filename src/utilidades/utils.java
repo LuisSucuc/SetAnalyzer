@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package utilidades;
 
-/**
- *
- * @author luis
- */
+import java.util.ArrayList;
+import java.util.List;
+import setanalyzer.Linea;
+
+
 public class utils {
     
     /**
@@ -29,6 +26,19 @@ public class utils {
             
         }
         return elements;
+    }
+    
+    public static String finalText(List<Linea> listaLineas){
+        String resultado = "";
+         for (Linea linea : listaLineas) {
+             if (!linea.isLineaVacia()) {
+                resultado = resultado + linea.getTextoOriginal() + "--->" + linea.getResultado() + "\n";
+             }
+             else{
+                resultado = resultado + "\n"; 
+             }          
+        }
+        return resultado;
     }
     
 }

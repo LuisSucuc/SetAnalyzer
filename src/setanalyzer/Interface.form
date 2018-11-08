@@ -29,20 +29,19 @@
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="440" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnSalir" min="-2" pref="192" max="-2" attributes="0"/>
-                          <Component id="btnGetArchivo" min="-2" pref="192" max="-2" attributes="0"/>
-                          <Component id="btnAnalizarArchivo" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
-                          <Component id="btnLimpiar" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="lblPath" alignment="0" min="-2" pref="310" max="-2" attributes="0"/>
+                  <Component id="btnSalir" min="-2" pref="192" max="-2" attributes="0"/>
+                  <Component id="btnGetArchivo" min="-2" pref="192" max="-2" attributes="0"/>
+                  <Component id="btnAnalizarArchivo" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
+                  <Component id="btnLimpiar" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="363" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="429" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="lblPath" min="-2" pref="966" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
