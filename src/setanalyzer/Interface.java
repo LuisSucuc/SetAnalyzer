@@ -207,16 +207,12 @@ public class Interface extends javax.swing.JFrame {
         //Variable que definirá si se encontraron errores
         Boolean errors = false;
         
-        //Se crea un ciclo "infinito"
         boolean line_operation = false;
         while (true){
             
             
             //Objeteo de la clase token, que retornará el token que encontró para su posterior evaluación
             Token token = lexer.yylex();
-            
-            //System.out.println("TEXTO A ANALIZAR: " + lexer.yytext());
-            //System.out.println("TOKEN RECIBIDO: " + token);
 
             //Si se legó el final del archivo
             if (token == null){
@@ -240,7 +236,6 @@ public class Interface extends javax.swing.JFrame {
                 
                 //Si se encuentra una nueva línea
                 case NUEVA_LINEA:
-                    //Si las cadenas no están vacías (Esto se da cuando solo se encuentran errores)
                     
                         //Se guarda la cadenaOriginal leida y la cadena de tokens separada por una flecha
                         String finLinea;
@@ -248,7 +243,7 @@ public class Interface extends javax.swing.JFrame {
                             finLinea = " SIN RECONOCIMIENTOS\n";
                         
                         else
-                            finLinea = "FIN. \n";
+                            finLinea = "\n";
                         
                         line_operation = false;
                         cadenaReporte = cadenaReporte + cadenaOriginal + " ---> " + cadenaTokens + finLinea;
@@ -283,6 +278,10 @@ public class Interface extends javax.swing.JFrame {
                     //Se suma a la cadena original el texto-palabra que se está evaluando
                     cadenaOriginal = cadenaOriginal + lexer.yytext();
                     if (token == CONJUNTO_UNIVERSO || token == DEFINICION || token == CONJUNTO || token == OPERACION_CONJUNTO || token == OPERACION) {
+                        if (token == CONJUNTO_UNIVERSO) {
+                            System.out.println(lexer.yytext());
+                            System.out.println(utilidades.utils.getElements(lexer.yytext()));
+                        }
                         cadenaTokens = cadenaTokens + " "+ token;
                         line_operation = true;
                     }                    
