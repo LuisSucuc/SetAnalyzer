@@ -1,6 +1,7 @@
 package setanalyzer;
 
 import static setanalyzer.Token.*;
+import utilidades.error;
 
 public class Linea {
     private String textoOriginal;
@@ -88,7 +89,7 @@ public class Linea {
     }
     
     public void error(String texto){
-        this.textoResultado = texto ;
+        this.textoResultado = this.textoResultado + texto ;
         actualizarVariables();
     }
     
@@ -99,7 +100,7 @@ public class Linea {
             lineaVacia = true;
         }
         else if (token == null) {
-            sumarTextoResultado("EXPRESIÓN INVÁLIDA");
+            this.textoResultado = this.textoResultado + error.LINEA_ERROR;
             return true;
         }
        return false;

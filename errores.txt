@@ -1,7 +1,8 @@
 DEFINICION
-A = 
+C= {   }
 B = {  1 }
-C = {  a }
+B = {  1 }
+
 D = {  a }
 
  S = { 3, 5, 7, 8, a, b }

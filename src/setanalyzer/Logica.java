@@ -50,9 +50,17 @@ public class Logica {
 
                 //Si se encuentra una nueva línea
                 case NUEVA_LINEA:
-                    lineaActual.actualizarVariables();
-                    listaLineas.add(lineaActual);
-                    lineaActual = new Linea();
+                    //lineaActual.actualizarVariables();
+                    if(lineaActual.actualizarVariables()){
+                        errorTodaLinea();
+                        return resultado;
+                    }
+                    else{
+                        System.out.println("SET TOKEN");
+                        lineaActual.setToken(token);
+                        listaLineas.add(lineaActual);
+                        lineaActual = new Linea();
+                    }
 
                     break;
 
@@ -61,10 +69,9 @@ public class Logica {
                     return resultado;
                     
                 case VOCABULARY:
-                    //lineaActual.setToken(token);
-                    lineaActual.sumarTextoOriginal(lexer.yytext());
-                    //error(error.VOCABULARIO, lexer.yytext(), lexer.line_count, lexer.column_count);
-                    System.out.println("algo");
+                    error(error.VOCABULARIO_TOKEN, lexer.yytext(), lexer.line_count, lexer.column_count);
+                    return resultado;
+                   
 
                 case SPACES:
                     lineaActual.sumarEspacioTextoOriginal();
@@ -127,6 +134,12 @@ public class Logica {
         listaLineas.add(lineaActual);
         generarResultado();
         JOptionPane.showMessageDialog(new JOptionPane(), error, "ERROR encontrado", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void errorTodaLinea(){
+        listaLineas.add(lineaActual);
+        generarResultado();
+        JOptionPane.showMessageDialog(new JOptionPane(), error.LINEA_ERROR, "ERROR encontrado", JOptionPane.ERROR_MESSAGE);
     }
     
     public void imprimirConjuntos(){
