@@ -1,8 +1,21 @@
  DEFINICION---> DEFINICION
- A = {  a }---> CONJUNTO
+ A =--->         EXPRESIÓN INVÁLIDA
  B = {  1 }---> CONJUNTO
  C = {  a }---> CONJUNTO
  D = {  a }---> CONJUNTO
 
- M = { 032 , 55 , 7 , 8 ,  a1a--->                                    Caracter desconocido : ' a1a' en línea 6 columna 19. 
+ S = { 3, 5, 7, 8, a, b }--->   CONJUNTO
+ X = { 3, 5, 7, 8, a, b }---> CONJUNTO
+ U = { 15, 1, 2, 3, 4, 5, 6, 7, 100, a, b, c}---> CONJUNTO
+ A = { 1, ssss, 3, 4 }---> CONJUNTO
+ B = { 2, 3, 5, 6 }---> CONJUNTO
+ C = { 3, 5, 7, 8 }---> CONJUNTO
+ D = { 0 }---> CONJUNTO
+ E = {a}---> CONJUNTO
+ F = { }---> CONJUNTO
+
+
+ OPERACION---> OPERACION
+ A & b--->           EXPRESIÓN INVÁLIDA
+ A&B  A&B--->  No se permite mas de una definicion por linea : 'A&B' en línea 19 columna 4. 
 

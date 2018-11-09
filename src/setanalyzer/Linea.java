@@ -88,19 +88,21 @@ public class Linea {
     }
     
     public void error(String texto){
-        this.textoResultado = this.textoResultado +  texto ;
+        this.textoResultado = texto ;
         actualizarVariables();
     }
     
     
     
-    public void actualizarVariables(){
+    public boolean actualizarVariables(){
        if ("".equals(textoOriginal) && "".equals(textoResultado)) {
             lineaVacia = true;
         }
         else if (token == null) {
-            sumarTextoResultado("SIN RECONOCIMIENTOS");
+            sumarTextoResultado("EXPRESIÓN INVÁLIDA");
+            return true;
         }
+       return false;
     }
    
 }

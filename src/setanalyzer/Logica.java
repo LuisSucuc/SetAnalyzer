@@ -50,7 +50,6 @@ public class Logica {
 
                 //Si se encuentra una nueva línea
                 case NUEVA_LINEA:
-                    System.out.println(leerArchivo.readLine());
                     lineaActual.actualizarVariables();
                     listaLineas.add(lineaActual);
                     lineaActual = new Linea();
@@ -62,7 +61,7 @@ public class Logica {
                     return resultado;
                     
                 case VOCABULARY:
-                    lineaActual.setToken(token);
+                    //lineaActual.setToken(token);
                     lineaActual.sumarTextoOriginal(lexer.yytext());
                     //error(error.VOCABULARIO, lexer.yytext(), lexer.line_count, lexer.column_count);
                     System.out.println("algo");
