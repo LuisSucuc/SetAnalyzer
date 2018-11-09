@@ -18,7 +18,7 @@ public class Analisis {
 
     ArrayList<Linea> listaLineas = new ArrayList<Linea>();
     ArrayList<Conjunto> conjuntos = new ArrayList<Conjunto>();
-    ArrayList<Operacion> operacion = new ArrayList<Operacion>();
+    ArrayList<Operacion> operaciones = new ArrayList<Operacion>();
     Conjunto universo;
     
     Linea lineaActual;
@@ -98,7 +98,7 @@ public class Analisis {
                             }
                             
                             else if(token == OPERACION_CONJUNTO){
-                                operacion.add(utils.newOperacion(lexer.yytext()));
+                                operaciones.add(utils.newOperacion(lexer.yytext()));
                             }
                             
                             lineaActual.sumarTextoOriginal(lexer.yytext());
@@ -119,6 +119,7 @@ public class Analisis {
 
     public void escribirArchivo(String resultado) {
         imprimirConjuntos();
+        imprimirOperaciones();
         try ( // Se crea el objeto que generará el reporte
                 PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8")) {
             //Se guarda en el archivo
@@ -150,9 +151,21 @@ public class Analisis {
     }
     
     public void imprimirConjuntos(){
+        System.out.println("\n\n\n\n\n\n");
+        System.out.println("************* CONJUNTO UNIVERSO ******");
+        System.out.println(universo.getNombre());
+        System.out.println(universo.getElementos());
+        System.out.println("\n************* CONJUNTOS ******");
         for (Conjunto c : conjuntos) {
             System.out.println(c.getNombre());
             System.out.println(c.getElementos());
+        }
+    }
+    
+    public void imprimirOperaciones(){
+        System.out.println("\n************* OPERACIONES ******");
+        for (Operacion op : operaciones) {
+            System.out.println(op.getConjunto1() + " " +op.getOperacion() + " "+ op.getConjunto2() + "\n" );
         }
     }
 
