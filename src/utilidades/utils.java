@@ -14,7 +14,7 @@ public class utils {
      * @param set Es el String de conjuntos que se envía
      * @return Un listado de conjuntos limpios
      */
-    public static Set<String> getElements(String set){
+    public static Set<String> getElementos(String set){
         
         set = set.replaceAll("\\s+","");
         set = set.replace("=", "");
@@ -28,10 +28,14 @@ public class utils {
 
         for (String element: elements) {
             set_elementos.add(element);
-            System.out.println(element);
             
         }
         return set_elementos;
+    }
+    
+    public static String getNombre(String set){
+        set = set.replaceAll("\\s+","");
+        return Character.toString(set.charAt(0));
     }
     
     public static String finalText(List<Linea> listaLineas){

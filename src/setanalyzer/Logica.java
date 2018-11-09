@@ -15,6 +15,9 @@ import utilidades.error;
 public class Logica {
 
     ArrayList<Linea> listaLineas = new ArrayList<Linea>();
+    ArrayList<Conjunto> conjuntos = new ArrayList<Conjunto>();
+    Conjunto universo;
+    
     Linea lineaActual;
     String resultado;
 
@@ -24,8 +27,9 @@ public class Logica {
     }
 
     public String generarLectura(String ubicacionArchivo) throws FileNotFoundException, IOException {
+        //BufferedReader leerLinea = new BufferedReader(new FileReader(ubicacionArchivo));
         //ubicacionArchivo = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/Entrada.txt";
-        Reader leerArchivo = new BufferedReader(new FileReader(ubicacionArchivo));
+        BufferedReader leerArchivo = new BufferedReader(new FileReader(ubicacionArchivo));
         //Se crea la instancia del analizador léxico (JFlex) y se le envía el archivo a analizar
         Lexer lexer = new Lexer(leerArchivo);
 
@@ -46,6 +50,7 @@ public class Logica {
 
                 //Si se encuentra una nueva línea
                 case NUEVA_LINEA:
+                    System.out.println(leerArchivo.readLine());
                     lineaActual.actualizarVariables();
                     listaLineas.add(lineaActual);
                     lineaActual = new Linea();
@@ -55,6 +60,12 @@ public class Logica {
                 case ERROR:
                     error(error.DESCONOCIDO, lexer.yytext(), lexer.line_count, lexer.column_count);
                     return resultado;
+                    
+                case VOCABULARY:
+                    lineaActual.setToken(token);
+                    lineaActual.sumarTextoOriginal(lexer.yytext());
+                    //error(error.VOCABULARIO, lexer.yytext(), lexer.line_count, lexer.column_count);
+                    System.out.println("algo");
 
                 case SPACES:
                     lineaActual.sumarEspacioTextoOriginal();
@@ -67,20 +78,20 @@ public class Logica {
                         //Se añade el token reconocido a la linea
                         lineaActual.setToken(token);
                         
-                        if (token == CONJUNTO_UNIVERSO || token == DEFINICION || token == CONJUNTO || token == OPERACION_CONJUNTO || token == OPERACION) {
+                        //if (token == CONJUNTO_UNIVERSO || token == DEFINICION || token == CONJUNTO || token == OPERACION_CONJUNTO || token == OPERACION) {
 
                             if (token == CONJUNTO_UNIVERSO) {
-                                System.out.println(utilidades.utils.getElements(lexer.yytext()));
+                                universo = new Conjunto( utilidades.utils.getNombre(lexer.yytext()), 
+                                                            utilidades.utils.getElementos(lexer.yytext()));
+                            }
+                            else if (token == CONJUNTO) {
+                                conjuntos.add(new Conjunto( utilidades.utils.getNombre(lexer.yytext()), 
+                                                            utilidades.utils.getElementos(lexer.yytext())));
                             }
                             lineaActual.sumarTextoOriginal(lexer.yytext());
                             lineaActual.sumarTextoResultado(token.name());
 
-                        } else if (token == VOCABULARY) {
-                            
-                            error(error.VOCABULARIO, lexer.yytext(), lexer.line_count, lexer.column_count);
-                            return resultado;
-
-                        }
+                        
                     }
                     //Si se intentas sobreescribir el token se muestra error
                     else {
@@ -94,6 +105,7 @@ public class Logica {
     }
 
     public void escribirArchivo(String resultado) {
+        imprimirConjuntos();
         try ( // Se crea el objeto que generará el reporte
                 PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8")) {
             //Se guarda en el archivo
@@ -116,6 +128,13 @@ public class Logica {
         listaLineas.add(lineaActual);
         generarResultado();
         JOptionPane.showMessageDialog(new JOptionPane(), error, "ERROR encontrado", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void imprimirConjuntos(){
+        for (Conjunto c : conjuntos) {
+            System.out.println(c.getNombre());
+            System.out.println(c.getElementos());
+        }
     }
 
 }

@@ -1,3 +1,8 @@
  DEFINICION---> DEFINICION
- U = {0, 1, 2, 3, 4, 5, 6, 7, 100, a, b, c}  *---> CONJUNTO_UNIVERSO  No se permite mas de una definicion por linea : '*' en línea 1 columna 43. 
+ A = {  a }---> CONJUNTO
+ B = {  1 }---> CONJUNTO
+ C = {  a }---> CONJUNTO
+ D = {  a }---> CONJUNTO
+
+ M = {  3a--->            Caracter desconocido : ' 3a' en línea 6 columna 4. 
 
