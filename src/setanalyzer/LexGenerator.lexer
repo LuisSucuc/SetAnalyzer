@@ -67,6 +67,7 @@ OPERACION_CONJUNTO =  ({LETRA_CONJUNTO} ( {UNION} | {INTERSECCION} | {DIFERENCIA
 {DEFINICION}                {return DEFINICION;}
 {CONJUNTO_UNIVERSO}         {return CONJUNTO_UNIVERSO;}
 {CONJUNTO}                  {return CONJUNTO;}
+{OPERACION}                 {return OPERACION;}
 {OPERACION_CONJUNTO}        {return OPERACION_CONJUNTO;}
 
 //Definiciones por defecto
@@ -76,21 +77,8 @@ OPERACION_CONJUNTO =  ({LETRA_CONJUNTO} ( {UNION} | {INTERSECCION} | {DIFERENCIA
 
 
 
-{OPERACION}                 {return OPERACION;}
-{PARENTESIS_ABIERTO}        {return PARENTESIS_ABIERTO;}
-{PARENTESIS_CERRADO}        {return PARENTESIS_CERRADO;}
-{UNION}                     {return UNION;}
-{INTERSECCION}              {return INTERSECCION;}
-{DIFERENCIA}                {return DIFERENCIA;}
-{PRODUCTO_CRUZ}             {return PRODUCTO_CRUZ;}
-{COMPLEMENTO}               {return COMPLEMENTO;}
-{LETRA_MINUSCULA}|{NUMERO}+ {return ELEMENTO;}
-{COMA}                      {return COMA;}
-{IGUAL}                     {return IGUAL;}
-{LLAVE_ABIERTA}             {return LLAVE_ABIERTA;}
-{LLAVE_CERRADA}             {return LLAVE_CERRADA;}
-{LETRA_MAYUSCULA}           {return LETRA_MAYUSCULA;}
+{PARENTESIS_ABIERTO} | {PARENTESIS_CERRADO} | {UNION} | {INTERSECCION} | {DIFERENCIA} | {PRODUCTO_CRUZ} | {COMPLEMENTO} | {LETRA_MINUSCULA}| {NUMERO} | {COMA} | {IGUAL} | {LLAVE_ABIERTA} | {LLAVE_CERRADA} | {LETRA_MAYUSCULA}  { line_count=yyline; column_count=yycolumn; return VOCABULARY; }
 
 
 
-. {line_count=yyline;column_count=yycolumn;return ERROR;}
+. { line_count=yyline; column_count=yycolumn; return ERROR; }

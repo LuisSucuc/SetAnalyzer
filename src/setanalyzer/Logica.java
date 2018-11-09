@@ -31,8 +31,7 @@ public class Logica {
 
             //Si se legó el final del archivo
             if (token == null){
-                resultado = utilidades.utils.finalText(listaLineas);
-                escribirArchivo(resultado);
+                generarResultado();
                 return resultado;
             }
             
@@ -41,7 +40,7 @@ public class Logica {
                 
                 //Si se encuentra una nueva línea
                 case NUEVA_LINEA:
-                        lineaActual.generarResultado();
+                        lineaActual.actualizarVariables();
                         listaLineas.add(lineaActual);
                         lineaActual = new Linea();
                     
@@ -50,9 +49,9 @@ public class Logica {
                 case ERROR:
                     lineaActual.sumarTextoOriginal(lexer.yytext());
                     lineaActual.errorTextoResultado(lexer.yytext(), lexer.line_count, lexer.column_count);
-                    
-
-                    break;
+                    listaLineas.add(lineaActual);
+                    generarResultado();
+                    return resultado;
 
                 case SPACES:
                     lineaActual.sumarEspacioTextoOriginal();
@@ -63,27 +62,50 @@ public class Logica {
                 default:
                     lineaActual.sumarTextoOriginal(lexer.yytext());
                     if (token == CONJUNTO_UNIVERSO || token == DEFINICION || token == CONJUNTO || token == OPERACION_CONJUNTO || token == OPERACION) {
-                        if (token == CONJUNTO_UNIVERSO) {
-                            System.out.println(utilidades.utils.getElements(lexer.yytext()));
+                        if (lineaActual.noTieneToken()) {
+                            if (token == CONJUNTO_UNIVERSO) {
+                                System.out.println(utilidades.utils.getElements(lexer.yytext()));
+                            }
+                            lineaActual.sumarTextoResultado(token.name());
+                            lineaActual.setToken(token);
                         }
-                        lineaActual.sumarTextoResultado(token.name());
+                        else{
+                            lineaActual.errorDuplicados();
+                            listaLineas.add(lineaActual);
+                            generarResultado();
+                            return resultado;
+                        }
+                        
+                        
+                    }
+                    else if(token == VOCABULARY){
                         lineaActual.setToken(token);
-                    }               
+                        lineaActual.errorVocabulario(lexer.yytext(), lexer.line_count, lexer.column_count);
+                        listaLineas.add(lineaActual);
+                        generarResultado();
+                        return resultado;
+                        
+                    }
             }
         }
         
    }
    
    public void escribirArchivo( String resultado){
-       try ( // Se crea el objeto que generará el reporte
-               PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8")) {
-           //Se guarda en el archivo
-           archivoReporte.println(resultado);
-           //Se cierra el archivo
-       }
-       catch(Exception e){
+        try ( // Se crea el objeto que generará el reporte
+            PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8")) {
+            //Se guarda en el archivo
+            archivoReporte.println(resultado);
+            //Se cierra el archivo
+        }
+        catch(Exception e){
            System.out.println("ERROR ESCRIBIENDO ARCHIVO");
-       }
+        }
+   }
+   
+   public void generarResultado(){
+       resultado = utilidades.utils.finalText(listaLineas);
+       escribirArchivo(resultado);
    }
     
 }

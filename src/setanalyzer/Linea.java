@@ -36,6 +36,10 @@ public class Linea {
         return token;
     }
     
+    public boolean noTieneToken(){
+        return token == null;
+    }
+    
     
     /*
     public boolean isError() {
@@ -76,11 +80,24 @@ public class Linea {
     }
     
     public void errorTextoResultado(String textoError, int linea, int columna){
-        this.textoResultado = this.textoResultado +  "Caracter no en lenguaje '" + textoError + "' en línea " + linea + " columna " + columna + ". ";
+        this.textoResultado = this.textoResultado +  " Caracter no en lenguaje '" + textoError + "' en línea " + linea + " columna " + columna + ". ";
         //this.error = true;
+        actualizarVariables();
     }
     
-    public void generarResultado(){
+    public void errorVocabulario(String textoError, int linea, int columna){
+        this.textoResultado = this.textoResultado +  " Caracter reconocido pero no aceptado: '" + textoError + "' en línea " + linea + " columna " + columna + ". ";
+        //this.error = true;
+        actualizarVariables();
+    }
+    
+    public void errorDuplicados(){
+        this.textoResultado = this.textoResultado +  " No se permite mas de una definicion por linea";
+        //this.error = true;
+        actualizarVariables();
+    }
+    
+    public void actualizarVariables(){
        if ("".equals(textoOriginal) && "".equals(textoResultado)) {
             lineaVacia = true;
         }
