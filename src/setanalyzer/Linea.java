@@ -1,19 +1,23 @@
 package setanalyzer;
 
+import static setanalyzer.Token.*;
+
 public class Linea {
     private String textoOriginal;
     private String textoResultado;
-    private boolean error;
+    //private boolean error;
     private boolean reconocimientos;
     private boolean lineaVacia;
-    private String resultado;
+    //private String resultado;
+    public Token token;
     
     public Linea() {
-        this.error = false;
+        //this.error = false;
         this.reconocimientos = false;
         this.textoOriginal = "";
         this.textoResultado = "";
         this.lineaVacia = false;
+        this.token  = null;
     }
     
     public String getTextoOriginal() {
@@ -27,11 +31,17 @@ public class Linea {
     public boolean isLineaVacia() {
         return lineaVacia;
     }
-    
 
+    public Token getToken() {
+        return token;
+    }
+    
+    
+    /*
     public boolean isError() {
         return error;
     }
+    */
 
     public boolean isReconocimientos() {
         return reconocimientos;
@@ -41,6 +51,11 @@ public class Linea {
         this.lineaVacia = lineaVacia;
     }
 
+    public void setToken(Token token) {
+        this.token = token;
+    }
+    
+    
     
 
     public void setReconocimientos(boolean reconocimientos) {
@@ -62,14 +77,14 @@ public class Linea {
     
     public void errorTextoResultado(String textoError, int linea, int columna){
         this.textoResultado = this.textoResultado +  "Caracter no en lenguaje '" + textoError + "' en línea " + linea + " columna " + columna + ". ";
-        this.error = true;
+        //this.error = true;
     }
     
     public void generarResultado(){
        if ("".equals(textoOriginal) && "".equals(textoResultado)) {
             lineaVacia = true;
         }
-        else if (!reconocimientos) {
+        else if (token == null) {
             sumarTextoResultado("SIN RECONOCIMIENTOS");
         }
     }

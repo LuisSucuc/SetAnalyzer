@@ -13,16 +13,10 @@ import static setanalyzer.Token.*;
 
 public class Logica {
    ArrayList<Linea> listaLineas = new ArrayList<Linea>();
+   String resultado = "";
    
    
-   public  String generarLectura(String ubicacionArchivo )  throws FileNotFoundException, IOException{
-       String resultado = "";
-       
-
-        // Se crea el objeto que generará el reporte
-        PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8");
-        
-        //Se crea el objeto que manipulará el archivo selecionado
+   public String generarLectura(String ubicacionArchivo )  throws FileNotFoundException, IOException{
         //ubicacionArchivo = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/Entrada.txt";
         Reader leerArchivo = new BufferedReader(new FileReader(ubicacionArchivo));
         //Se crea la instancia del analizador léxico (JFlex) y se le envía el archivo a analizar
@@ -38,11 +32,7 @@ public class Logica {
             //Si se legó el final del archivo
             if (token == null){
                 resultado = utilidades.utils.finalText(listaLineas);
-                
-                //Se guarda en el archivo
-                archivoReporte.println(resultado);
-                //Se cierra el archivo
-                archivoReporte.close();
+                escribirArchivo(resultado);
                 return resultado;
             }
             
@@ -77,11 +67,23 @@ public class Logica {
                             System.out.println(utilidades.utils.getElements(lexer.yytext()));
                         }
                         lineaActual.sumarTextoResultado(token.name());
-                        lineaActual.setReconocimientos(true);
+                        lineaActual.setToken(token);
                     }               
             }
         }
         
+   }
+   
+   public void escribirArchivo( String resultado){
+       try ( // Se crea el objeto que generará el reporte
+               PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8")) {
+           //Se guarda en el archivo
+           archivoReporte.println(resultado);
+           //Se cierra el archivo
+       }
+       catch(Exception e){
+           System.out.println("ERROR ESCRIBIENDO ARCHIVO");
+       }
    }
     
 }
