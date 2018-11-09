@@ -1,6 +1,7 @@
 
 package setanalyzer;
 
+import Objects.Linea;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -195,8 +196,8 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnAnalizarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarArchivoActionPerformed
         try {
-            Logica logica = new Logica();
-            String resultado =  logica.generarLectura(ubicacionArchivo);
+            Analisis logica = new Analisis();
+            String resultado =  logica.lexicoSintactico(ubicacionArchivo);
             //Se muestra el resultado en el label
             txtResultado.setText(resultado);
             //Analizar();

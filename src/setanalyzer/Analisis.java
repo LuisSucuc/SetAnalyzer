@@ -1,32 +1,35 @@
 package setanalyzer;
 
+import Objects.Conjunto;
+import Objects.Linea;
+import Objects.Operacion;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static setanalyzer.Token.*;
 import utilidades.error;
+import utilidades.utils;
 
-public class Logica {
+public class Analisis {
 
     ArrayList<Linea> listaLineas = new ArrayList<Linea>();
     ArrayList<Conjunto> conjuntos = new ArrayList<Conjunto>();
+    ArrayList<Operacion> operacion = new ArrayList<Operacion>();
     Conjunto universo;
     
     Linea lineaActual;
     String resultado;
 
-    public Logica() {
+    public Analisis() {
         lineaActual = new Linea();
         resultado = "";
     }
 
-    public String generarLectura(String ubicacionArchivo) throws FileNotFoundException, IOException {
+    public String lexicoSintactico(String ubicacionArchivo) throws FileNotFoundException, IOException {
         //BufferedReader leerLinea = new BufferedReader(new FileReader(ubicacionArchivo));
         //ubicacionArchivo = "/home/luis/Dropbox/UMG/Automatas/Projects/Set Analyzer/Entrada.txt";
         BufferedReader leerArchivo = new BufferedReader(new FileReader(ubicacionArchivo));
@@ -56,7 +59,6 @@ public class Logica {
                         return resultado;
                     }
                     else{
-                        System.out.println("SET TOKEN");
                         lineaActual.setToken(token);
                         listaLineas.add(lineaActual);
                         lineaActual = new Linea();
@@ -87,13 +89,18 @@ public class Logica {
                         //if (token == CONJUNTO_UNIVERSO || token == DEFINICION || token == CONJUNTO || token == OPERACION_CONJUNTO || token == OPERACION) {
 
                             if (token == CONJUNTO_UNIVERSO) {
-                                universo = new Conjunto( utilidades.utils.getNombre(lexer.yytext()), 
-                                                            utilidades.utils.getElementos(lexer.yytext()));
+                                universo = new Conjunto( utils.getNombre(lexer.yytext()), 
+                                                          utils.getElementos(lexer.yytext()));
                             }
                             else if (token == CONJUNTO) {
-                                conjuntos.add(new Conjunto( utilidades.utils.getNombre(lexer.yytext()), 
-                                                            utilidades.utils.getElementos(lexer.yytext())));
+                                conjuntos.add(new Conjunto( utils.getNombre(lexer.yytext()), 
+                                                            utils.getElementos(lexer.yytext())));
                             }
+                            
+                            else if(token == OPERACION_CONJUNTO){
+                                operacion.add(utils.newOperacion(lexer.yytext()));
+                            }
+                            
                             lineaActual.sumarTextoOriginal(lexer.yytext());
                             lineaActual.sumarTextoResultado(token.name());
 
@@ -116,7 +123,7 @@ public class Logica {
                 PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8")) {
             //Se guarda en el archivo
             archivoReporte.println(resultado);
-            //Se cierra el archivo
+            //Se cierra el arschivo
         } catch (Exception e) {
             System.out.println("ERROR ESCRIBIENDO ARCHIVO");
         }

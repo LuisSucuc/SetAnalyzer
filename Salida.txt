@@ -1,3 +1,19 @@
  DEFINICION  --->   DEFINICION
- C= {   }  C= {   }  --->   CONJUNTO No se permite mas de una definicion por linea : 'C= {   }' en línea 1 columna 9. 
+ U = {0, 1, 2, 3, 4, 5, 6, 7, 100, a, b, c}  --->   CONJUNTO
+ A = { 1, 2, 3, 4 }  --->   CONJUNTO
+ B = { 2, 3, 5, 6 }  --->   CONJUNTO
+ C = { 3, 5, 7, 8 }  --->   CONJUNTO
+ D = { 0 }  --->   CONJUNTO
+ E = { a }  --->   CONJUNTO
+ F = { }  --->   CONJUNTO
+ OPERACION  --->   OPERACION
+ A & B  --->   OPERACION_CONJUNTO
+ A&B  --->   OPERACION_CONJUNTO
+ A&B  --->   OPERACION_CONJUNTO
+ A$B  --->   OPERACION_CONJUNTO
+ A $ B  --->   OPERACION_CONJUNTO
+ A / B  --->   OPERACION_CONJUNTO
+ A & E  --->   OPERACION_CONJUNTO
+ A * E  --->   OPERACION_CONJUNTO
+ A^c  --->   OPERACION_CONJUNTO
 

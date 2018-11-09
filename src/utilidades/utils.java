@@ -1,10 +1,12 @@
-
 package utilidades;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import setanalyzer.Linea;
+import Objects.Linea;
+import Objects.Operacion;
+import setanalyzer.Token;
+import static setanalyzer.Token.*;
 
 
 public class utils {
@@ -33,9 +35,9 @@ public class utils {
         return set_elementos;
     }
     
-    public static String getNombre(String set){
+    public static char getNombre(String set){
         set = set.replaceAll("\\s+","");
-        return Character.toString(set.charAt(0));
+        return set.charAt(0);
     }
     
     public static String finalText(List<Linea> listaLineas){
@@ -51,4 +53,36 @@ public class utils {
         return resultado;
     }
     
+    public static Operacion newOperacion(String nuevaOperacion){
+        Operacion  operacion = new Operacion();
+        nuevaOperacion = nuevaOperacion.replaceAll("\\s+","");
+        String token = nuevaOperacion.replaceAll("[A-Z]", "");
+        Token tokenOperacion = getTokenOperation(token);
+        
+        
+        if (tokenOperacion != COMPLEMENTO) {
+            operacion.setConjunto2(nuevaOperacion.charAt(2));
+        }
+        operacion.setConjunto1(nuevaOperacion.charAt(0));
+        operacion.setOperacion(tokenOperacion);
+        return operacion;
+    }
+    
+    public static Token getTokenOperation(String token){
+        switch(token){
+            case "&":
+                return UNION;
+            case "$":
+                return INTERSECCION;
+            case "/":
+                return DIFERENCIA;
+            case "*":
+                return PRODUCTO_CRUZ;
+            case "^c":
+                return COMPLEMENTO;
+            default:
+                return NO_RECONOCIDO;
+        }
+        
+    }
 }

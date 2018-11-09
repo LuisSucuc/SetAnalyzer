@@ -1,5 +1,6 @@
-package setanalyzer;
+package Objects;
 
+import setanalyzer.Token;
 import static setanalyzer.Token.*;
 import utilidades.error;
 
