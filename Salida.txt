@@ -4,5 +4,5 @@
  C = {  a }---> CONJUNTO
  D = {  a }---> CONJUNTO
 
- M = {  3a--->            Caracter desconocido : ' 3a' en línea 6 columna 4. 
+ M = { 032 , 55 , 7 , 8 ,  a1a--->                                    Caracter desconocido : ' a1a' en línea 6 columna 19. 
 

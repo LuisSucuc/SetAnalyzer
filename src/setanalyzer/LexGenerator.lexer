@@ -21,7 +21,7 @@ IGUAL             = "="
 
 LETRA_MINUSCULA = [a-z] | "ñ"
 LETRA_MAYUSCULA = [A-Z] | "Ñ"
-NUMERO          = [1-9]
+NUMERO          = [0-9]+
 
 
 OPERACION          = "OPERACION"
@@ -44,7 +44,7 @@ NUEVA_LINEA = \r|\n|\r\n|\t|\f
 
 
 
-ELEMENTO = ({SPACE}*  {NUMERO}+ {SPACE}*) | ( {SPACE}* {LETRA_MINUSCULA}+  {SPACE}* )
+ELEMENTO = ({SPACE}*  {NUMERO} {SPACE}*) | ( {SPACE}* {LETRA_MINUSCULA}+  {SPACE}* )
 ELEMENTO_COMA = {COMA} {ELEMENTO}
 ELEMENTOS = {ELEMENTO} {ELEMENTO_COMA}+
 
@@ -82,6 +82,8 @@ OPERACION_CONJUNTO =  ({LETRA_CONJUNTO} ( {UNION} | {INTERSECCION} | {DIFERENCIA
 
 {PARENTESIS_ABIERTO} | {PARENTESIS_CERRADO} | {UNION} | {INTERSECCION} | {DIFERENCIA} | {PRODUCTO_CRUZ} | {COMPLEMENTO} | {LETRA_MINUSCULA}| {NUMERO} | {COMA} | {IGUAL} | {LLAVE_ABIERTA} | {LLAVE_CERRADA} | {LETRA_MAYUSCULA}  { line_count=yyline; column_count=yycolumn; return VOCABULARY; }
 
-{SPACE}*  ({NUMERO}+ {LETRA_MINUSCULA}+)+  {SPACE}*  {return ERROR;}
+{SPACE}*  ({LETRA_MINUSCULA}* {NUMERO}+ {LETRA_MINUSCULA}+)+  {SPACE}*         {return ERROR;}
+{NUMERO}+ {SPACE}* {NUMERO}+                                {return ERROR;}
+{LETRA_MINUSCULA}+ {SPACE}* {LETRA_MINUSCULA}+              {return ERROR;}
 
 . { line_count=yyline; column_count=yycolumn; return ERROR; }
