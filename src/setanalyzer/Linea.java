@@ -79,23 +79,20 @@ public class Linea {
         sumarTextoResultado(" ");
     }
     
-    public void errorTextoResultado(String textoError, int linea, int columna){
-        this.textoResultado = this.textoResultado +  " Caracter no en lenguaje '" + textoError + "' en línea " + linea + " columna " + columna + ". ";
-        //this.error = true;
+ 
+    
+    
+    public void error(String descripcion, String textoError, int linea, int columna){
+        this.textoResultado = this.textoResultado +  descripcion + textoError + "' en línea " + linea + " columna " + columna + ". ";
         actualizarVariables();
     }
     
-    public void errorVocabulario(String textoError, int linea, int columna){
-        this.textoResultado = this.textoResultado +  " Caracter reconocido pero no aceptado: '" + textoError + "' en línea " + linea + " columna " + columna + ". ";
-        //this.error = true;
+    public void error(String texto){
+        this.textoResultado = this.textoResultado +  texto ;
         actualizarVariables();
     }
     
-    public void errorDuplicados(){
-        this.textoResultado = this.textoResultado +  " No se permite mas de una definicion por linea";
-        //this.error = true;
-        actualizarVariables();
-    }
+    
     
     public void actualizarVariables(){
        if ("".equals(textoOriginal) && "".equals(textoResultado)) {

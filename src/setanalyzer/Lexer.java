@@ -649,23 +649,23 @@ class Lexer {
             }
           case 13: break;
           case 5: 
-            { return OPERACION_CONJUNTO;
+            { line_count=yyline; column_count=yycolumn; return OPERACION_CONJUNTO;
             }
           case 14: break;
           case 6: 
-            { return CONJUNTO;
+            { line_count=yyline; column_count=yycolumn; return CONJUNTO;
             }
           case 15: break;
           case 7: 
-            { return CONJUNTO_UNIVERSO;
+            { line_count=yyline; column_count=yycolumn; return CONJUNTO_UNIVERSO;
             }
           case 16: break;
           case 8: 
-            { return OPERACION;
+            { line_count=yyline; column_count=yycolumn; return OPERACION;
             }
           case 17: break;
           case 9: 
-            { return DEFINICION;
+            { line_count=yyline; column_count=yycolumn; return DEFINICION;
             }
           case 18: break;
           default:
