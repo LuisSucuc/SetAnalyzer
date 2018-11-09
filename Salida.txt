@@ -6,6 +6,9 @@
  D = { 0 }---> CONJUNTO
  E = { a }---> CONJUNTO
  F = { }---> CONJUNTO
+
+ ? ) ( 7--->No reconocido '?' en línea 9 columna 0.      SIN RECONOCIMIENTOS
+
  OPERACION---> OPERACION
  A & B---> OPERACION_CONJUNTO
  A&B---> OPERACION_CONJUNTO

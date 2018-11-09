@@ -2,16 +2,17 @@ package setanalyzer;
 
 public class Linea {
     private String textoOriginal;
-    private String resultado;
+    private String textoResultado;
     private boolean error;
     private boolean reconocimientos;
     private boolean lineaVacia;
+    private String resultado;
     
     public Linea() {
         this.error = false;
         this.reconocimientos = false;
         this.textoOriginal = "";
-        this.resultado = "";
+        this.textoResultado = "";
         this.lineaVacia = false;
     }
     
@@ -19,8 +20,8 @@ public class Linea {
         return textoOriginal;
     }
 
-    public String getResultado() {
-        return resultado;
+    public String getTextoResultado() {
+        return textoResultado;
     }
 
     public boolean isLineaVacia() {
@@ -46,8 +47,8 @@ public class Linea {
         this.reconocimientos = reconocimientos;
     }
     
-    public void sumarResultado(String nuevoTexto){
-        this.resultado = this.resultado  + " " + nuevoTexto;
+    public void sumarTextoResultado(String nuevoTexto){
+        this.textoResultado = this.textoResultado  + " " + nuevoTexto;
         
     }
     
@@ -56,20 +57,20 @@ public class Linea {
     }
     
     public void sumarEspacioTextoOriginal(){
-        sumarResultado(" ");
+        sumarTextoResultado(" ");
     }
     
-    public void errorResultado(String textoError, int linea, int columna){
-        this.resultado = this.resultado +  "No reconocido '" + textoError + "' en línea " + linea + " columna " + columna + ". ";
+    public void errorTextoResultado(String textoError, int linea, int columna){
+        this.textoResultado = this.textoResultado +  "Caracter no en lenguaje '" + textoError + "' en línea " + linea + " columna " + columna + ". ";
         this.error = true;
     }
     
-    public void evaluarReconocimientos(){
-        if ("".equals(textoOriginal) && "".equals(resultado)) {
+    public void generarResultado(){
+       if ("".equals(textoOriginal) && "".equals(textoResultado)) {
             lineaVacia = true;
         }
         else if (!reconocimientos) {
-            sumarResultado("SIN RECONOCIMIENTOS");
+            sumarTextoResultado("SIN RECONOCIMIENTOS");
         }
     }
    

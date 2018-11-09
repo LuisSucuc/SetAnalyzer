@@ -10,7 +10,6 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import static setanalyzer.Token.*;
 
 
@@ -225,7 +224,7 @@ public class Interface extends javax.swing.JFrame {
                 
                 //Si se encuentra una nueva línea
                 case NUEVA_LINEA:
-                        lineaActual.evaluarReconocimientos();
+                        lineaActual.generarResultado();
                         listaLineas.add(lineaActual);
                         lineaActual = new Linea();
                     
@@ -233,7 +232,7 @@ public class Interface extends javax.swing.JFrame {
 
                 case ERROR:
                     lineaActual.sumarTextoOriginal(lexer.yytext());
-                    lineaActual.errorResultado(lexer.yytext(), lexer.line_count, lexer.column_count);
+                    lineaActual.errorTextoResultado(lexer.yytext(), lexer.line_count, lexer.column_count);
                     
 
                     break;
@@ -250,7 +249,7 @@ public class Interface extends javax.swing.JFrame {
                         if (token == CONJUNTO_UNIVERSO) {
                             System.out.println(utilidades.utils.getElements(lexer.yytext()));
                         }
-                        lineaActual.sumarResultado(token.name());
+                        lineaActual.sumarTextoResultado(token.name());
                         lineaActual.setReconocimientos(true);
                     }                    
             }
@@ -268,7 +267,11 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnAnalizarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarArchivoActionPerformed
         try {
-            Analizar();
+            Logica logica = new Logica();
+            String resultado =  logica.generarLectura(ubicacionArchivo);
+            //Se muestra el resultado en el label
+            txtResultado.setText(resultado);
+            //Analizar();
         } catch (IOException ex) {
             
         }

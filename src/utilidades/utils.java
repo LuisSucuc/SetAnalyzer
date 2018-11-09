@@ -1,7 +1,6 @@
 
 package utilidades;
 
-import java.util.ArrayList;
 import java.util.List;
 import setanalyzer.Linea;
 
@@ -32,7 +31,7 @@ public class utils {
         String resultado = "";
          for (Linea linea : listaLineas) {
              if (!linea.isLineaVacia()) {
-                resultado = resultado + linea.getTextoOriginal() + "--->" + linea.getResultado() + "\n";
+                resultado = resultado + linea.getTextoOriginal() + "--->" + linea.getTextoResultado() + "\n";
              }
              else{
                 resultado = resultado + "\n"; 
