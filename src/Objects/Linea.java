@@ -2,19 +2,19 @@ package Objects;
 
 import setanalyzer.Token;
 import static setanalyzer.Token.*;
-import utilidades.error;
+import utilidades.mensajeError;
 
 public class Linea {
     private String textoOriginal;
     private String textoResultado;
-    //private boolean error;
+    //private boolean mensajeError;
     private boolean reconocimientos;
     private boolean lineaVacia;
     //private String resultado;
     public Token token;
     
     public Linea() {
-        //this.error = false;
+        //this.mensajeError = false;
         this.reconocimientos = false;
         this.textoOriginal = "";
         this.textoResultado = "";
@@ -45,7 +45,7 @@ public class Linea {
     
     /*
     public boolean isError() {
-        return error;
+        return mensajeError;
     }
     */
 
@@ -101,7 +101,7 @@ public class Linea {
             lineaVacia = true;
         }
         else if (token == null) {
-            this.textoResultado = this.textoResultado + error.LINEA_ERROR;
+            this.textoResultado = this.textoResultado + mensajeError.LINEA_ERROR;
             return true;
         }
        return false;

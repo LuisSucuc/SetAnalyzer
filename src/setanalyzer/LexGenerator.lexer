@@ -88,7 +88,7 @@ OPERACION_CONJUNTO =  ({LETRA_CONJUNTO} ( {UNION} | {INTERSECCION} | {DIFERENCIA
 {NUMERO}+ {SPACE}* {NUMERO}+                                                                    {return ERROR;}
 {SPACE}*  (({LETRA_MINUSCULA}+ {NUMERO})+ | ({NUMERO}{LETRA_MINUSCULA}+)+)+ {SPACE}*            {return ERROR;}
 {SPACE}*   ({LETRA_MAYUSCULA} {LETRA_MAYUSCULA}+)+ {SPACE}*                                     {return ERROR;}
-
+{SPACE}*  ({LETRA_MINUSCULA}+ {LETRA_MAYUSCULA}+)+ {SPACE}*            {return ERROR;}
 
 ({OPERACION} {OPERACION}+ )+              {return ERROR;}
 . { line_count=yyline; column_count=yycolumn; return ERROR; }

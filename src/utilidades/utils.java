@@ -26,18 +26,25 @@ public class utils {
         String[] elements = set.split(",");
         
         Set<String> set_elementos = new HashSet<String>();
-
+        
+        if(elements.length ==1){
+            if ("".equals(elements[0])) {
+                return set_elementos;
+                
+            }
+        }
 
         for (String element: elements) {
             set_elementos.add(element);
             
         }
+        
         return set_elementos;
     }
     
-    public static char getNombre(String set){
-        set = set.replaceAll("\\s+","");
-        return set.charAt(0);
+    public static String getNombre(String texto){
+        texto = texto.replaceAll("\\s+","");
+        return Character.toString(texto.charAt(0));
     }
     
     public static String finalText(List<Linea> listaLineas){
@@ -61,9 +68,9 @@ public class utils {
         
         
         if (tokenOperacion != COMPLEMENTO) {
-            operacion.setConjunto2(nuevaOperacion.charAt(2));
+            operacion.setConjunto2(Character.toString(nuevaOperacion.charAt(2)));
         }
-        operacion.setConjunto1(nuevaOperacion.charAt(0));
+        operacion.setConjunto1(Character.toString(nuevaOperacion.charAt(0)));
         operacion.setOperacion(tokenOperacion);
         return operacion;
     }

@@ -6,15 +6,19 @@ import java.util.Set;
 
 
 public class Conjunto {
-    private char nombre;
+    private String nombre;
     private Set<String> elementos = new HashSet<String>();
 
-    public Conjunto(char nombre, Set<String> elementos) {
+    public Conjunto(String nombre, Set<String> elementos) {
         this.nombre = nombre;
         this.elementos = elementos;
     }
-
-    public char  getNombre() {
+    
+    public Conjunto(){
+        this.nombre = "";
+        
+    }
+    public String  getNombre() {
         return nombre;
     }
 
@@ -22,7 +26,7 @@ public class Conjunto {
         return elementos;
     }
 
-    public void setNombre(char nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -30,7 +34,11 @@ public class Conjunto {
         this.elementos = elementos;
     }
     
-    
+    public boolean tieneElementos(){
+        System.out.println("TOTAL ELEMENTOS" + elementos.size());
+        return elementos.size() > 0;
+        
+    }
     
     
 }

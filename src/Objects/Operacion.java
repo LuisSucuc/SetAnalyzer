@@ -4,11 +4,11 @@ package Objects;
 import setanalyzer.Token;
 
 public class Operacion {
-    private char conjunto1;
-    private char conjunto2;
+    private String conjunto1;
+    private String conjunto2;
     private Token operacion;
 
-   public Operacion(char conjunto1 , char conjunto2, Token operacion){
+   public Operacion(String conjunto1 , String conjunto2, Token operacion){
        this.conjunto1  = conjunto1;
        this.conjunto2  = conjunto2;
        this.operacion  = operacion;
@@ -18,11 +18,11 @@ public class Operacion {
         
     }
 
-    public char getConjunto1() {
+    public String getConjunto1() {
         return conjunto1;
     }
 
-    public char getConjunto2() {
+    public String getConjunto2() {
         return conjunto2;
     }
 
@@ -30,11 +30,11 @@ public class Operacion {
         return operacion;
     }
 
-    public void setConjunto1(char conjunto1) {
+    public void setConjunto1(String conjunto1) {
         this.conjunto1 = conjunto1;
     }
 
-    public void setConjunto2(char conjunto2) {
+    public void setConjunto2(String conjunto2) {
         this.conjunto2 = conjunto2;
     }
 
