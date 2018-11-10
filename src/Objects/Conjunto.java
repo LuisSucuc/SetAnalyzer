@@ -35,7 +35,6 @@ public class Conjunto {
     }
     
     public boolean tieneElementos(){
-        System.out.println("TOTAL ELEMENTOS" + elementos.size());
         return elementos.size() > 0;
         
     }

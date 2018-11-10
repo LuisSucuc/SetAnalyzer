@@ -1,0 +1,17 @@
+DEFINICION
+U = { 1, 2, 3, 4,  a, b, c, d}
+A = { 1, 2 }
+B = { a,b}
+C = { 1,2,3,4 }
+D = { a,b,c,d}
+E = { a }
+F = { }
+
+
+OPERACION
+F & F
+A&B
+A$C
+A/C
+C/A
+A^c

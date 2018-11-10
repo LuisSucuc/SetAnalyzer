@@ -9,10 +9,11 @@ F = { }
 
 
 OPERACION
-A & K
-A&B
-A&B
-A$B
+F & F
+A&C
+A&D
+A$C
+A^c
 A $ B
 A / B
 A & E

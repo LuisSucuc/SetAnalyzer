@@ -109,5 +109,9 @@ public class Linea {
         }
        return false;
     }
+    
+    public void superResultado(String texto){
+        this.textoResultado = texto;
+    }
    
 }

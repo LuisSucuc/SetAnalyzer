@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import javax.swing.JOptionPane;
 import static setanalyzer.Token.*;
+import utilidades.Calculo;
 import utilidades.mensajeError;
 import utilidades.TokenEsperado;
 import utilidades.utils;
@@ -207,6 +208,22 @@ public class Analisis {
                     
                     if (existenConjunto(operacionActual.getConjunto2())) {
                         
+                        Set<String> C1 = getElementosConjunto(operacionActual.getConjunto1());
+                        
+                        Set<String> C2;
+                        if (operacionActual.getOperacion() != COMPLEMENTO) {
+                            C2 = getElementosConjunto(operacionActual.getConjunto2());
+                        }
+                        else{
+                            C2 = universo.getElementos();
+                        }
+                        
+                        
+                        Set<String> resultado =  Calculo.calcular(C1, C2,operacionActual.getOperacion());
+                        System.out.println(resultado);
+                        lineaReconocida.superResultado(getStringRespuesta(resultado));
+                        lineasResultado.add(lineaReconocida);
+                        
                     }
                     else{
                         String error = mensajeError.CONJUNTO_NO_DEFINIDO + operacionActual.getConjunto2();
@@ -224,7 +241,7 @@ public class Analisis {
                 controlOperacion++;
             }
             
-        
+            generarResultadoSemantico();
             
             //}
             /*else{
@@ -236,6 +253,13 @@ public class Analisis {
     } 
 
   
+    public String getStringRespuesta(Set<String> set){
+        String result = "{";
+        for (String string : set) {
+            result = result + string + ",";
+        }
+        return result + "}";
+    }
     
     public void generarErrorSintactico(String error,Linea lineaReconocida) {
         errorSintactico(error);
@@ -243,7 +267,6 @@ public class Analisis {
         lineaReconocida.sumarTextoResultado(error);
         generarResultadoSemantico();
     }
-    
     
     public boolean noLeido(String nombreConjunto){
         for (String nombre: conjuntosLeidos) {
@@ -270,21 +293,14 @@ public class Analisis {
         return "";
     }
     
-    
-    
-    
-    
-    
     public void errorSintactico(String error){
         JOptionPane.showMessageDialog(new JOptionPane(), error, "ERROR Semántico", JOptionPane.ERROR_MESSAGE);
     }
-    
-    
-    
-    
-    
+
     public boolean existenConjunto(String conjunto){
-        System.out.println("ENVIADOS");
+        if (conjunto == null) {
+            return true;
+        }
         System.out.println(conjunto);
          for (String nombre: conjuntosLeidos) {
             if (conjunto.equals(nombre)) {
@@ -294,7 +310,18 @@ public class Analisis {
         return false;
     }
     
-    
+    public Set<String> getElementosConjunto(String nombre){
+        if (nombre == null ? universo.getNombre() == null : nombre.equals(universo.getNombre())) {
+            return universo.getElementos();
+            
+        }
+        for(Conjunto c: conjuntos){
+            if (c.getNombre().equals(nombre)) {
+                return c.getElementos();
+            }
+        }
+        return null;
+    }
     
     
     
@@ -313,8 +340,8 @@ public class Analisis {
     
     
     public void escribirArchivo(String resultado) {
-        imprimirConjuntos();
-        imprimirOperaciones();
+        //imprimirConjuntos();
+        //imprimirOperaciones();
         try ( // Se crea el objeto que generará el reporte
                 PrintWriter archivoReporte = new PrintWriter("Salida.txt", "UTF-8")) {
             //Se guarda en el archivo
