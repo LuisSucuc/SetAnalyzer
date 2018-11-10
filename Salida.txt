@@ -1,18 +1,24 @@
  DEFINICION  --->   DEFINICION
- U = { 1, 2, 3, 4,  a, b, c, d}  --->   CONJUNTO_UNIVERSO
- A = { 1, 2 }  --->   CONJUNTO
- B = { a,b}  --->   CONJUNTO
- C = { 1,2,3,4 }  --->   CONJUNTO
- D = { a,b,c,d}  --->   CONJUNTO
+ U = {0, 1, 2, 3, 4, 5, 6, 7, palabra, a, b, c}  --->   CONJUNTO_UNIVERSO
+ A = { 1, 2, 3, 4 }  --->   CONJUNTO
+ B = { 1, 3, 4, 5}  --->   CONJUNTO
+ C = { a,b,c }  --->   CONJUNTO
+ D = { palabra}  --->   CONJUNTO
  E = { a }  --->   CONJUNTO
  F = { }  --->   CONJUNTO
-
+ G = {1,2}  --->   CONJUNTO
+ H = {3,4}  --->   CONJUNTO
 
  OPERACION  --->   OPERACION
+ G*H  --->  {(2, 3),(2, 4),(1, 4),(1, 3),}
  F & F  --->  {}
- A&B  --->  {1,2,a,b,}
- A$C  --->  {1,2,}
- A/C  --->  {}
- C/A  --->  {3,4,}
- A^c  --->  {a,b,3,c,4,d,}
+ A&C  --->  {1,2,3,4,a,b,c,}
+ A&D  --->  {1,2,3,4,palabra,}
+ A$C  --->  {}
+ A^c  --->  {0,a,b,c,palabra,5,6,7,}
+ A $ B  --->  {1,3,4,}
+ A / B  --->  {2,}
+ A & E  --->  {1,2,3,4,a,}
+ A * E  --->  {(2, a),(3, a),(4, a),(1, a),}
+ A^c  --->  {0,a,b,c,palabra,5,6,7,}
 

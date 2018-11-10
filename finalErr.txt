@@ -6,9 +6,11 @@ C = { a,b,c }
 D = { palabra}
 E = { a }
 F = { }
-
+G = {1,2}
+H = {3,4}
 
 OPERACION
+G*H
 F & F
 A&C
 A&D

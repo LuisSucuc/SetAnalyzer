@@ -2,8 +2,11 @@
 package utilidades;
 
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import setanalyzer.Token;
 import static setanalyzer.Token.*;
@@ -29,6 +32,16 @@ public class Calculo {
         return Sets.difference(C2, C1);
     }
     
+    public static  Set<String> productoCruz(Set<String> C1, Set<String> C2){
+        Set<String>  set = new HashSet<String>();
+        for (String string1 : C1) {
+            for (String string2 : C2) {
+                set.add("(" + string1 + ", " + string2 +")" );
+            }
+        }
+        return set;
+    }
+    
     public static Set<String> calcular(Set<String> C1, Set<String> C2, Token operacion){
         if (operacion == UNION) {
             return union(C1, C2);
@@ -43,6 +56,9 @@ public class Calculo {
         
         else if (operacion == COMPLEMENTO){
             return complemento(C1, C2);
+        }
+        else if (operacion == PRODUCTO_CRUZ){
+            return productoCruz(C1, C2);
         }
         
         return null;

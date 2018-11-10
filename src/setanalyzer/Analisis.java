@@ -142,8 +142,8 @@ public class Analisis {
     
     
     public void Semantico(){
-        System.out.println("Nombre" + universo.getNombre());
-        System.out.println("Nombre" + universo.tieneElementos());
+        //System.out.println("Nombre" + universo.getNombre());
+        //System.out.println("Nombre" + universo.tieneElementos());
         //Validaciones iniciales
         if("".equals(universo.getNombre()) || universo.tieneElementos() == false){
             generarResultado();
@@ -171,10 +171,10 @@ public class Analisis {
             
             else if(lineaReconocida.token == CONJUNTO) {
                 
-                System.out.println(lineaReconocida.getTextoOriginal());
+                //System.out.println(lineaReconocida.getTextoOriginal());
                 Conjunto conjuntoActual = conjuntos.get(controlConjuntos);
-                System.out.println(conjuntoActual.getElementos());
-                System.out.println("\n\n *************** \n \n");
+                //System.out.println(conjuntoActual.getElementos());
+                //System.out.println("\n\n *************** \n \n");
                 
                 //Si el conjunto aún no existe
                 if (noLeido(conjuntoActual.getNombre()) ){
@@ -220,7 +220,7 @@ public class Analisis {
                         
                         
                         Set<String> resultado =  Calculo.calcular(C1, C2,operacionActual.getOperacion());
-                        System.out.println(resultado);
+                        //System.out.println(resultado);
                         lineaReconocida.superResultado(getStringRespuesta(resultado));
                         lineasResultado.add(lineaReconocida);
                         
