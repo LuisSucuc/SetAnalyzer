@@ -81,6 +81,9 @@ public class Linea {
         sumarTextoResultado(" ");
     }
     
+    public void sumarTextoOriginalSinEsapcios(String nuevoTexto){
+        this.textoOriginal = this.textoOriginal +  nuevoTexto;
+    }
  
     
     

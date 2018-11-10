@@ -53,6 +53,8 @@ public class Analisis {
                 //generarResultado();
                 return resultado;
             }
+            
+            
 
             //Se evalúa el token encontrado
             switch (token) {
@@ -77,16 +79,26 @@ public class Analisis {
                     return resultado;
                     
                 case VOCABULARY:
-                    error(mensajeError.VOCABULARIO_TOKEN, lexer.yytext(), lexer.line_count, lexer.column_count);
-                    return resultado;
-                   
-
+                    if (lineaActual.noTieneToken()) {
+                    lineaActual.sumarTextoOriginal(lexer.yytext());
+                    }
+                    else{
+                        error(mensajeError.DUPLICADO, lexer.yytext(), lexer.line_count, lexer.column_count);
+                        generarResultado();
+                        return resultado;
+                    }
+                    break;
+                    
+                    
+                    
                 case SPACES:
                     lineaActual.sumarEspacioTextoOriginal();
                     break;
 
                 //Para todos los lexemas reconocidos
                 default:
+                    
+                      
                     //Comprobar 2 tokens por linea
                     if (lineaActual.noTieneToken()) {
                         //Se añade el token reconocido a la linea
@@ -106,7 +118,7 @@ public class Analisis {
                             else if(token == OPERACION_CONJUNTO){
                                 operaciones.add(utils.newOperacion(lexer.yytext()));
                             }
-                            
+
                             lineaActual.sumarTextoOriginal(lexer.yytext());
                             lineaActual.sumarTextoResultado(token.name());
 
@@ -188,7 +200,7 @@ public class Analisis {
                 
             }
             
-            else if(lineaReconocida.token == OPERACION) {
+            else if(lineaReconocida.token == OPERACION_CONJUNTO) {
                 Operacion operacionActual = operaciones.get(controlOperacion);
                 
                 if (existenConjunto(operacionActual.getConjunto1())) {
@@ -199,12 +211,14 @@ public class Analisis {
                     else{
                         String error = mensajeError.CONJUNTO_NO_DEFINIDO + operacionActual.getConjunto2();
                         generarErrorSintactico(error, lineaReconocida);
+                        return;
                     }
                     
                 } 
                 else {
                     String error = mensajeError.CONJUNTO_NO_DEFINIDO + operacionActual.getConjunto1();
                     generarErrorSintactico(error, lineaReconocida);
+                    return;
                 }
                 
                 controlOperacion++;
@@ -270,6 +284,8 @@ public class Analisis {
     
     
     public boolean existenConjunto(String conjunto){
+        System.out.println("ENVIADOS");
+        System.out.println(conjunto);
          for (String nombre: conjuntosLeidos) {
             if (conjunto.equals(nombre)) {
                 return true;
